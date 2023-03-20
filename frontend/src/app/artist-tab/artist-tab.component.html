@@ -1,0 +1,47 @@
+<div *ngIf="artistDetails!= undefined && artistDetails.length>0; else noMusicArtists">
+    <div *ngIf="artistDetails.length==1; else carouselDiv">
+        {{artistDetails[0].artists.items[0].name}}
+    </div>
+    <ng-template #carouselDiv>
+        <div id="carouselExampleControls" class="carousel slide" data-interval="false">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="d-block w-100">
+                        <img src="{{artistDetails[0].artists.items[0].images[0].url}}" style="width:50px;height:50px" alt="...">
+                        Name: {{artistDetails[0].artists.items[0].name}}
+                        Followers: {{ formatFollowersCount(artistDetails[0].artists.items[0].followers.total) }}
+                        Popularity: <mat-progress-spinner color="warn" value="{{artistDetails[0].artists.items[0].popularity}}"><span style="color:red; position: relative;">{{artistDetails[0].artists.items[0].popularity}}</span></mat-progress-spinner>
+                        Spotify Link: <a href="{{artistDetails[0].artists.items[0].external_urls.spotify}}" target="_blank"><i class="fab fa-spotify"></i></a>
+                        Albums featuring {{artistDetails[0].artists.items[0].name}}:
+                        <div *ngFor="let image of artistDetails[0].albums.items">
+                            <img src="{{image.images[0].url}}" alt="AlbumImage" />
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item" *ngFor="let artist of artistDetails.slice(1)">
+                    <img src="{{artist.artists.items[0].images[0].url}}" style="width:50px;height:50px" alt="...">
+                    Name: {{artist.artists.items[0].name}}
+                    Followers: {{ formatFollowersCount(artist.artists.items[0].followers.total) }}
+                    Popularity:<mat-progress-spinner color="warn" value="{{artist.artists.items[0].popularity}}"></mat-progress-spinner><span style="color:red; position: relative;">{{artist.artists.items[0].popularity}}</span>
+                    Spotify Link: <a href="{{artist.artists.items[0].external_urls.spotify}}" target="_blank"><i class="fab fa-spotify"></i></a>
+                    Albums featuring {{artist.artists.items[0].name}}:
+                    <div *ngFor="let image of artist.albums.items">
+                        <img src="{{image.images[0].url}}" alt="AlbumImage"/>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </ng-template>
+</div>
+
+<ng-template #noMusicArtists>
+    <div>No music related artist details to show</div>
+</ng-template>

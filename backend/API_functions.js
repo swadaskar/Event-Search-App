@@ -24,16 +24,35 @@ async function getAutoSuggest(keyword) {
 
 async function getEventSearchData(keyword, segmentId, radius, unit, latlon) {
     let [lat,lon] = latlon.split(',')
+    let categories = {
+        "default": "",
+        "music": "KZFzniwnSyZfZ7v7nJ",
+        "sports": "KZFzniwnSyZfZ7v7nE",
+        "art": "KZFzniwnSyZfZ7v7na",
+        "film": "KZFzniwnSyZfZ7v7nn",
+        "miscellaneous": "KZFzniwnSyZfZ7v7n1"
+    };
+    console.log(`\nEvent Search Data Call: ${keyword}, ${categories[segmentId]}, ${radius}, ${unit}, ${latlon}`);
     let options = {
         method: 'GET',
         url: `https://app.ticketmaster.com/discovery/v2/events.json`,
-        params: { apikey: apiKey, keyword: keyword, segmentId: segmentId, radius: radius, unit: unit, geoPoint: geohash.encode(lat, lon, 7) },
+        params: { apikey: apiKey, keyword: keyword, segmentId: categories[segmentId], radius: radius, unit: unit, geoPoint: geohash.encode(lat, lon, 7) },
         headers: { 'Content-Type': 'application/json'}
     }
     let response = await axios(options).catch(function (error) {
         console.log(`Error received:${error}`)
     })
-    return response.data
+    if (response.status != 200) {
+        console.log(`Error received:${response.status}`)
+        return {}
+    }else{
+        if (response.data._embedded != undefined) {
+            return response.data   
+        }else{
+            console.log(`No events found for ${keyword} in ${radius} ${unit}`)
+            return {}
+        }
+    }
 }
 
 // event detail sample url

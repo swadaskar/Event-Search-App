@@ -1,0 +1,82 @@
+<div *ngIf="venueDetails!=undefined && venueDetails._embedded!=undefined">
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <h2>Name</h2>
+                    <p>{{venueDetails._embedded.venues[0].name}}</p>
+                    <h2>Address</h2>
+                    <p>{{venueDetails._embedded.venues[0].address.line1}}, {{venueDetails._embedded.venues[0].city.name}},
+                        {{venueDetails._embedded.venues[0].state.name}}</p>
+                    <div *ngIf="venueDetails._embedded.venues[0].boxOfficeInfo?.phoneNumberDetail!=undefined">
+                        <h2>Phone Number</h2>
+                        <p>{{venueDetails._embedded.venues[0].boxOfficeInfo?.phoneNumberDetail}}</p>
+                    </div>
+                </td>
+                <td>
+                    <ng-container *ngIf="venueDetails._embedded.venues[0].boxOfficeInfo?.openHoursDetail!=undefined">
+                        <h2>Open Hours</h2>
+                        <p>{{venueDetails._embedded.venues[0].boxOfficeInfo?.openHoursDetail}}</p>
+                    </ng-container>
+                    <ng-container *ngIf="venueDetails._embedded.venues[0].generalInfo?.generalRule!=undefined">
+                        <h2>General Rule</h2>
+                        <p>{{venueDetails._embedded.venues[0].generalInfo?.generalRule}}</p>
+                    </ng-container>
+                    <ng-container *ngIf="venueDetails._embedded.venues[0].generalInfo?.childRule!=undefined">
+                        <h2>Child Rule</h2>
+                        <p>{{venueDetails._embedded.venues[0].generalInfo?.childRule}}</p>
+                    </ng-container>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+        Show venue on Google map
+    </button> -->
+</div>
+
+
+<!-- Modal HTML -->
+<!-- 
+<div class="modal" tabindex="-1" role="dialog" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Event Venue</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Launch demo modal
+</button> -->
+
+<!-- Modal -->
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div> -->

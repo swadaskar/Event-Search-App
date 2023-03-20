@@ -1,0 +1,55 @@
+<div class="container">
+    <app-nav></app-nav>
+
+    <form [formGroup]="reactiveForm" (submit)="onSubmit()" [noValidate]="false">
+        <div class="centerAlign">
+            <h2>Event Search</h2>
+        </div>
+        <label for="keyword">Keyword<span class="star">*</span></label>
+        <input type="text" id="keyword" class="form-control" formControlName="keyword" [formControl]="keywordCtrl" [matAutocomplete]="auto" required>
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngIf="isLoading" class="is-loading"><div>Loading...</div></mat-option>
+            <ng-container *ngIf="!isLoading">
+                <mat-option *ngFor="let keyword of filteredKeywords" [value]="keyword">
+                    {{keyword}}
+                </mat-option>
+            </ng-container>
+        </mat-autocomplete>
+        
+    
+        <table>
+            <tr>
+                <td id="distanceColumn">
+                    <label for="distance">Distance (miles)</label>
+                    <input type="number" id="distance" formControlName="distance" required>
+                </td>
+                <td>
+                    <label for="category">Category<span class="star">*</span></label>
+                    <select id="category" formControlName="category" required>
+                        <option value="default">Default</option>
+                        <option value="music">Music</option>
+                        <option value="sports">Sports</option>
+                        <option value="art">Arts & Theatre</option>
+                        <option value="film">Film</option>
+                        <option value="miscellaneous">Miscellaneous</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <label for="location" >Location<span class="star">*</span></label>
+        <input type="checkbox" id="autodetect" formControlName="autodetect" (change)="autoLocate($event)"><span
+            style="padding-left: 5px;color: lightgrey;">Auto-Detect Location</span>
+        <input type="text" id="location" formControlName="location" required>
+        <br>
+        <br>
+        <div>
+            <button class="submit" type="submit">SEARCH</button>
+            <button class="clear" type="reset" (click)="resetForm()">CLEAR</button>
+        </div>
+    </form>
+
+    <div>
+        <app-search-table [showTable]="!resetSection" [searchResult]="searchResult">
+        </app-search-table>
+    </div>
+</div>
