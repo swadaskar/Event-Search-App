@@ -1,0 +1,51 @@
+
+
+
+.subheading {
+    font-size: 17px;
+    color: #6af9f8;
+    padding-top: 15px
+}
+
+.text {
+    margin-bottom: 8px;
+    font-size: 13px;
+    margin-top: 1px;
+}
+
+
+
+/* Show more CSS */
+
+/* Open Hours */
+#openHrs #openHrsCollapse.collapse:not(.show) {
+    display: block;
+    height: var(--collapseHeight);
+    overflow: hidden;
+}
+
+#openHrs #openHrsCollapse.collapsing {
+    height: var(--collapseHeight);
+}
+
+/* General Rules */
+#genRule #genRuleCollapse.collapse:not(.show) {
+    display: block;
+    height: var(--collapseHeight);
+    overflow: hidden;
+}
+
+#genRule #genRuleCollapse.collapsing {
+    height: var(--collapseHeight);
+}
+
+/* Child Rules */
+#childRule #childRuleCollapse.collapse:not(.show) {
+    display: block;
+    height: var(--collapseHeight);
+    overflow: hidden;
+}
+
+#childRule #childRuleCollapse.collapsing {
+    height: var(--collapseHeight);
+}

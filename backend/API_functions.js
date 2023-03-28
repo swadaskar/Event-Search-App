@@ -42,17 +42,7 @@ async function getEventSearchData(keyword, segmentId, radius, unit, latlon) {
     let response = await axios(options).catch(function (error) {
         console.log(`Error received:${error}`)
     })
-    if (response.status != 200) {
-        console.log(`Error received:${response.status}`)
-        return {}
-    }else{
-        if (response.data._embedded != undefined) {
-            return response.data   
-        }else{
-            console.log(`No events found for ${keyword} in ${radius} ${unit}`)
-            return {}
-        }
-    }
+    return response.data
 }
 
 // event detail sample url

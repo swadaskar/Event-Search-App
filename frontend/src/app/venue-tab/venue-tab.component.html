@@ -1,82 +1,75 @@
-<div *ngIf="venueDetails!=undefined && venueDetails._embedded!=undefined">
-    <div>
-        <table>
-            <tr>
-                <td>
-                    <h2>Name</h2>
-                    <p>{{venueDetails._embedded.venues[0].name}}</p>
-                    <h2>Address</h2>
-                    <p>{{venueDetails._embedded.venues[0].address.line1}}, {{venueDetails._embedded.venues[0].city.name}},
-                        {{venueDetails._embedded.venues[0].state.name}}</p>
-                    <div *ngIf="venueDetails._embedded.venues[0].boxOfficeInfo?.phoneNumberDetail!=undefined">
-                        <h2>Phone Number</h2>
-                        <p>{{venueDetails._embedded.venues[0].boxOfficeInfo?.phoneNumberDetail}}</p>
-                    </div>
-                </td>
-                <td>
+<div class="text-center">
+    <div *ngIf="venueDetails!=undefined && venueDetails._embedded!=undefined">
+        <div>
+            <div class="row py-3">
+                <div class="col-md-6 px-0">
+
+                    <div class="subheading">Name</div>
+                    <div class="text">{{venueDetails._embedded.venues[0].name}}</div>
+
+                    <div class="subheading">Address</div>
+                    <div class="text">{{venueDetails._embedded.venues[0].address.line1}}, {{venueDetails._embedded.venues[0].city.name}},
+                        {{venueDetails._embedded.venues[0].state.name}}</div>
+
+                    <ng-container *ngIf="venueDetails._embedded.venues[0].boxOfficeInfo?.phoneNumberDetail!=undefined">
+                        <div class="subheading">Phone Number</div>
+                        <div class="text">{{venueDetails._embedded.venues[0].boxOfficeInfo?.phoneNumberDetail}}</div>
+                    </ng-container>
+
+                </div>
+                <div class="col-md-6 px-0">
+
                     <ng-container *ngIf="venueDetails._embedded.venues[0].boxOfficeInfo?.openHoursDetail!=undefined">
-                        <h2>Open Hours</h2>
-                        <p>{{venueDetails._embedded.venues[0].boxOfficeInfo?.openHoursDetail}}</p>
+                        <div class="subheading">Open Hours</div>
+                        <div id="openHrs" class="container">
+                            <div class="text collapse my-0" id="openHrsCollapse" aria-expanded="false">
+                                {{venueDetails._embedded.venues[0].boxOfficeInfo?.openHoursDetail}}
+                            </div>
+                            <a role="button" class="collapsed" data-bs-toggle="collapse" href="#openHrsCollapse" aria-expanded="false"
+                                aria-controls="openHrsCollapse" (click)="changeShowMoreOH()">
+                                {{showMoreOH ? "Show More" : "Show Less"}}
+                            </a>
+                            <b><i *ngIf="showMoreOH" class="fa fa-angle-down ps-1" aria-hidden="true"></i></b>
+                            <b><i *ngIf="!showMoreOH" class="fa fa-angle-up ps-1" aria-hidden="true"></i></b>
+                        </div>
                     </ng-container>
+
                     <ng-container *ngIf="venueDetails._embedded.venues[0].generalInfo?.generalRule!=undefined">
-                        <h2>General Rule</h2>
-                        <p>{{venueDetails._embedded.venues[0].generalInfo?.generalRule}}</p>
+                        <div class="subheading">General Rule</div>
+                        <div id="genRule" class="container">
+                            <div class="text collapse my-0" id="genRuleCollapse" aria-expanded="false">
+                                {{venueDetails._embedded.venues[0].generalInfo?.generalRule}}
+                            </div>
+                            <a role="button" class="collapsed" data-bs-toggle="collapse" href="#genRuleCollapse" aria-expanded="false"
+                                aria-controls="genRuleCollapse" (click)="changeShowMoreGR()">
+                                {{showMoreGR ? "Show More" : "Show Less"}}
+                            </a>
+                            <b><i *ngIf="showMoreGR" class="fa fa-angle-down ps-1" aria-hidden="true"></i></b>
+                            <b><i *ngIf="!showMoreGR" class="fa fa-angle-up ps-1" aria-hidden="true"></i></b>
+                        </div>
                     </ng-container>
+
                     <ng-container *ngIf="venueDetails._embedded.venues[0].generalInfo?.childRule!=undefined">
-                        <h2>Child Rule</h2>
-                        <p>{{venueDetails._embedded.venues[0].generalInfo?.childRule}}</p>
+                        <div class="subheading">Child Rule</div>
+                        <div id="childRule" class="container">
+                            <div class="text collapse my-0" id="childRuleCollapse" aria-expanded="false">
+                                {{venueDetails._embedded.venues[0].generalInfo?.childRule}}
+                            </div>
+                            <a role="button" class="collapsed" data-bs-toggle="collapse" href="#childRuleCollapse" aria-expanded="false"
+                                aria-controls="childRuleCollapse" (click)="changeShowMoreCR()">
+                                {{showMoreCR ? "Show More" : "Show Less"}}
+                            </a>
+                            <b><i *ngIf="showMoreCR" class="fa fa-angle-down ps-1" aria-hidden="true"></i></b>
+                            <b><i *ngIf="!showMoreCR" class="fa fa-angle-up ps-1" aria-hidden="true"></i></b>
+                        </div>
                     </ng-container>
-                </td>
-            </tr>
-        </table>
+
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-danger mt-2 mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            (click)="sendBackLocation()">
+            Show venue on Google map
+        </button>
     </div>
-    <!-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
-        Show venue on Google map
-    </button> -->
 </div>
-
-
-<!-- Modal HTML -->
-<!-- 
-<div class="modal" tabindex="-1" role="dialog" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Event Venue</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-<!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Launch demo modal
-</button> -->
-
-<!-- Modal -->
-<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div> -->

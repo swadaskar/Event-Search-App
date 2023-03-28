@@ -1,0 +1,42 @@
+/* Nav */
+li a {
+    color: white;
+    cursor: pointer;
+}
+
+.active {
+    border: 1px solid white;
+    border-radius: 15px;
+}
+
+/* Search Form */
+
+ .blur {
+     background-color: rgba(255, 255, 255, .2);
+     backdrop-filter: blur(10px);
+     border-radius: 17px;
+     font-size: 15px;
+     margin-bottom: 70px;
+ }
+ 
+.heading {
+    color: #ffffffd9;
+    font-size: 30px;
+}
+
+#hrStyle {
+    border: 1px solid #fffffffe;
+}
+
+label {
+    color: #93e4ff;
+    margin-bottom: 0;
+}
+
+.star {
+    color: red;
+}
+
+button {
+    font-size: 15px;
+}

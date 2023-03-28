@@ -1,0 +1,14 @@
+table {
+    /* border-radius: 18px; */
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    /* border: 1px solid #ccc; */
+}
+
+.emptySearch {
+    border-radius: 15px;
+    background-color: white;
+    color: red;
+}

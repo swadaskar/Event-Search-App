@@ -8,10 +8,12 @@ import { DecimalPipe } from '@angular/common';
 })
 export class ArtistTabComponent implements OnInit, OnChanges {
 
-  @Input() artistDetails: any[] | undefined;
+  @Input() artistDetails: any[];
 
   
-  constructor(private decimalPipe: DecimalPipe) { }
+  constructor(private decimalPipe: DecimalPipe) { 
+    this.artistDetails = [];
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.artistDetails)

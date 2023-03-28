@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CallService } from '../backend-call.service';
 
 @Component({
@@ -9,59 +9,56 @@ import { CallService } from '../backend-call.service';
 export class EventDetailsComponent implements OnInit, OnChanges {
 
   @Input() showEventDetails: any;
+  showDetails: boolean = false;
+
   @Input() eventResults: any;
   // @Input() venueResults: any;
 
+  @Output() gmapEvent = new EventEmitter<any>();
+  @Output() backEvent = new EventEmitter<any>();
 
   ticketStatus: any;
   artistResults: any[];
   venueResults: any;
+  isFavourite: boolean = false;
+  favorites: any;
 
   constructor(private api : CallService) {
     this.artistResults = [];
     this.venueResults = {};
    }
 
-  async ngOnChanges(changes: SimpleChanges): Promise<void> {
+  ngOnChanges(changes: SimpleChanges) {
     // console.log(this.eventResults)
     // console.log(this.showEventDetails)
     if (this.showEventDetails){
+      this.showDetails = true;
       if (this.eventResults._embedded != undefined) {
+        
         this.eventResults = this.eventResults;
         this.ticketStatus = this.getStatus(this.eventResults['dates']['status']['code'])
       } else {
         this.eventResults = [];
       }
-    }
+    
 
-    // Artist Details
-    for (var i = 0; i < this.eventResults['_embedded']['attractions'].length; i++){
-      if (this.eventResults['_embedded']['attractions'][i]['classifications'][0]['segment']['name'] == "Music") {
-        // console.log(this.eventResults['_embedded']['attractions'][i]['name']);
-        // console.log(i)
-        this.api.getArtistDetailData(this.eventResults['_embedded']['attractions'][i]['name']).subscribe((data: any) => {
-          this.artistResults.push(data);
-          // console.log(data)
-        });
+      // Artist Details
+      for (var i = 0; i < this.eventResults['_embedded']['attractions'].length; i++){
+        if (this.eventResults['_embedded']['attractions'][i]['classifications'][0]['segment']['name'] == "Music") {
+          this.api.getArtistDetailData(this.eventResults['_embedded']['attractions'][i]['name']).subscribe((data: any) => {
+            this.artistResults.push(data);
+            // console.log(data)
+          });
+        }
       }
+
+      // Venue Details
+      this.api.getVenueDetailData(this.eventResults['_embedded']['venues'][0]['name']).subscribe((data: any) => {
+        this.venueResults=data;
+        console.log(data)
+      });
     }
-
-    // Venue Details
-    this.api.getVenueDetailData(this.eventResults['_embedded']['venues'][0]['name']).subscribe((data: any) => {
-      this.venueResults=data;
-      console.log(data)
-    });
-
-    // const temp = this.eventResults['_embedded']['attractions'].map((t:any) => t['classifications'][0]['segment']['name'] == "Music" ? this.api.getArtistDetailData(t['name']) : null).filter((v: any) => v!=undefined);
-    // this.artistResults = await Promise.all(temp);
-    // console.log(this.artistResults)
-
-
-    // for (var i = 0; this.artistResults!=undefined && i < this.artistResults?.length; i++) {
-    //   console.log(this.artistResults[i].artists.items[0].name)
-    // }
   }
-
 
   getStatus(statusCode: string){
     switch (statusCode) {
@@ -82,11 +79,51 @@ export class EventDetailsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    // To check if the event is already in favorites
+    let temp: any = localStorage.getItem('favorites');
+    if (temp != null) {
+      this.favorites = JSON.parse(temp);
+    } else {
+      this.favorites = [];
+    }
+
+    for(var i = 0; i < this.favorites.length; i++){
+      if (this.favorites[i]['event'] == this.eventResults['name']){
+        this.isFavourite = true;
+        break;
+      }
+    }
+  }
+
+  makeFavourite(){
+    if (this.isFavourite){
+      alert("Event Removed from Favorites!");
+      this.favorites = this.favorites.filter((item: any) => item['event'] !== this.eventResults['name']);
+      this.isFavourite = false;
+    }else{
+      alert("Event Added to Favorites!")
+      let temp = {
+        date: this.eventResults['dates']['start']['localDate'],
+        event: this.eventResults['name'],
+        category: this.eventResults['_embedded']['attractions'][0]['classifications'][0],
+        venue: this.eventResults['_embedded']['venues'][0]['name'],
+      }
+      this.favorites.push(temp);
+      this.isFavourite = true;
+    }
+    localStorage.setItem('favorites', JSON.stringify(this.favorites));
   }
 
   goBack(){
     // go back to search results
-    console.log("goback")
+    console.log("Inside event details: goback")
+    this.artistResults = [];
+    this.venueResults = {};
+    this.showDetails = false;
+    this.backEvent.emit(true);
   }
 
+  sendBackLocation(location: any){
+    this.gmapEvent.emit(location);
+  }
 }

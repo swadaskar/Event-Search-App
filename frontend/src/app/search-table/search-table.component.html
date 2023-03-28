@@ -1,64 +1,66 @@
-<div *ngIf="showTable && this.searchResult.length>0">
-    <div class="container">
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Date/Time</th>
-                    <th>Icon</th>
-                    <th>Event</th>
-                    <th>Genre</th>
-                    <th>Venue</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let event of searchResult">
-                    <!-- <td><a>{{event['dates']['start']['localDate']}} {{(event['dates']['start']['localTime']!=undefined)?('<span style="display:block;">'+event['dates']['start']['localTime'])+'</span>':""}}</a></td> -->
-                    <td (click)="eventDetails(event['id'])"><a>{{event.dates.start.localDate}} <span *ngIf="event.dates.start.localTime!=undefined" style="display:block;">{{event.dates.start.localTime}}</span></a></td>
-                    <td (click)="eventDetails(event['id'])"><img src="{{event['images'][0]['url']}}" style="height: 90px; width: 90px;"></td>
-                    <td (click)="eventDetails(event['id'])">{{event['name']}}</td>
-                    <td (click)="eventDetails(event['id'])">{{(event['_embedded']['attractions'][0]['classifications'][0]['segment']['name'] != undefined)? event['_embedded']['attractions'][0]['classifications'][0]['segment']['name'] : "N/A" }}</td>
-                    <td (click)="eventDetails(event['id'])">{{event['_embedded']['venues'][0]['name']}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-<div *ngIf="showTable && this.searchResult.length==0">
-    <div class="container">
-        <div class="centerAlign">
-            <h3>No results available</h3>
+<div class="row">
+    <div class="col-md-9 mx-auto">
+        <div *ngIf="showTable && showMainTable && this.searchResult.length>0">
+            <div class="">
+                <table class="table table-dark table-striped overflow-hidden text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width:15%;">Date/Time</th>
+                            <th scope="col" style="width:15%;">Icon</th>
+                            <th scope="col" style="width:39%;">Event</th>
+                            <th scope="col" style="width:11%;">Genre</th>
+                            <th scope="col" style="width:20%;">Venue</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let event of searchResult">
+                            <tr *ngIf="event['name']!=undefined && event._embedded?.venues!=undefined && event._embedded?.venues[0]?.name!=undefined && event._embedded.attractions!=undefined && event._embedded.attractions[0]?.classifications[0]?.segment?.name
+                                    != undefined">
+                                <th scope="row" (click)="eventDetails(event['id'])"><a>{{event.dates.start.localDate}} <span
+                                            *ngIf="event.dates.start.localTime!=undefined"
+                                            style="display:block;">{{event.dates.start.localTime}}</span></a></th>
+                                <td (click)="eventDetails(event['id'])"><img src="{{event['images'][0]['url']}}"
+                                        style="height: 75px;width: 75px;">
+                                </td>
+                                <td (click)="eventDetails(event['id'])">{{event['name']}}</td>
+                                <td (click)="eventDetails(event['id'])">
+                                    {{event['_embedded']['attractions'][0]['classifications'][0]['segment']['name']}}
+                                </td>
+                                <td (click)="eventDetails(event['id'])">{{event['_embedded']['venues'][0]['name']}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div *ngIf="showTable && showMainTable && this.searchResult.length==0">
+            <div class="emptySearch text-center mb-2">
+                No results available
+            </div>
+        </div>
+    
+        <div *ngIf="!showMainTable && showTable && this.selectedEvent != undefined">
+            <app-event-details [showEventDetails]="showDetails" [eventResults]="selectedEvent"
+                (gmapEvent)="getGoogleMaps($event)" (backEvent)="showTableAgain($event)">
+            </app-event-details>
         </div>
     </div>
 </div>
 
-<div *ngIf="!showTable && this.selectedEvent != undefined">
-    <div class="container">
-        <app-event-details [showEventDetails]="!showTable" [eventResults]="selectedEvent">
-        </app-event-details>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-            Launch demo modal
-        </button>
-        
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel" style="color:black;"><b>Event Venue</b></h1>
+            </div>
+            <div class="modal-body">
+                <div class="my-google-map" *ngIf="mapOptions!=undefined && marker!=undefined">
+                    <google-map width="100%" [options]="mapOptions">
+                        <map-marker [position]="marker.position"></map-marker>
+                    </google-map>
                 </div>
+                <button type="button" class="btn btn-dark my-3 ms-3 me-auto" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

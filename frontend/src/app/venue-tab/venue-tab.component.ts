@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-venue-tab',
@@ -9,6 +9,12 @@ export class VenueTabComponent implements OnInit, OnChanges {
 
   @Input() venueDetails: any;
   
+  @Output() gmapEvent = new EventEmitter<any>();
+
+  showMoreOH: boolean = true;
+  showMoreGR: boolean = true;
+  showMoreCR: boolean = true;
+
   constructor() { }
   
   ngOnChanges(changes: SimpleChanges): void {
@@ -18,4 +24,22 @@ export class VenueTabComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
 
+  sendBackLocation():void {
+    // console.log("Hello from Venue Tab")
+    let latlon = { latitude: parseFloat(this.venueDetails['_embedded']['venues'][0]['location']['latitude']), longitude: parseFloat(this.venueDetails['_embedded']['venues'][0]['location']['longitude']) }
+    // console.log(latlon)
+    this.gmapEvent.emit(latlon);
+  }
+
+  changeShowMoreOH(): void {
+    this.showMoreOH = !this.showMoreOH;
+  }
+
+  changeShowMoreGR(): void {
+    this.showMoreGR = !this.showMoreGR;
+  }
+
+  changeShowMoreCR(): void {
+    this.showMoreCR = !this.showMoreCR;
+  }
 }

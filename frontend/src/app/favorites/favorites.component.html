@@ -1,0 +1,78 @@
+<div class="mx-4">
+    <!-- Nav bar -->
+    <ul class="nav justify-content-end mt-2 mb-4">
+        <li class="nav-item">
+            <a class="nav-link p-2 mx-1" [routerLink]="'../search'">Search</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" [routerLink]="'../favorites'">Favourites</a>
+        </li>
+    </ul>
+
+
+    <div class="row">
+        <div class="col-md-8 text-center mx-auto">
+            <div class="mt-4" *ngIf="this.favorites.length!=0">
+                <!-- Favorites table -->
+                <div class="heading mb-3">List of your favorite events</div>
+                <div class="">
+                    <table class="table table-light overflow-hidden text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width:2%;">#</th>
+                                <th scope="col" style="width:13%;">Date</th>
+                                <th scope="col" style="width:30%;">Event</th>
+                                <th scope="col" style="width:30%;">Category</th>
+                                <th scope="col" style="width:20%;">Venue</th>
+                                <th scope="col" style="width:5%;">Favorite</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr [class.table-secondary]="mouseOver[i]" (mouseover)="mouseOver[i]=true" (mouseout)="mouseOver[i]=false" *ngFor="let event of favorites; let i=index">
+                                <td><b>{{i+1}}</b></td>
+                                <td>{{event['date']}}</td>
+                                <td>{{event['event']}}</td>
+                                <td>
+                                    <!-- <ng-container *ngFor="let Type of ['subGenre','genre','segment','subType','type']; let i=index">
+                                        <ng-container
+                                            *ngIf="event['category'][Type] != undefined && event['category'][Type]['name'] !== 'undefined' && event['category'][Type]['name'] !== 'Undefined'">
+                                            <div class="subheading">Genres</div>
+                                            <div class="text">
+                                                {{ event['category'][Type]['name'] }}
+                                            </div>
+                                        </ng-container>
+                                    </ng-container> -->
+                                    <ng-container *ngFor="let Type of ['subGenre','genre','segment','subType','type']; let i=index">
+                                        <div class="text" style="display:inline">
+                                            <span *ngIf="i==0 && event['category'][Type] != undefined && event['category'][Type]['name'] !== 'undefined' && event['category'][Type]['name'] !== 'Undefined'; else others">
+                                                {{event['category'][Type]['name']}}
+                                            </span>
+                                            <ng-template #others>
+                                                <ng-container
+                                                    *ngIf="event['category'][Type] != undefined && event['category'][Type]['name'] !== 'undefined' && event['category'][Type]['name'] !== 'Undefined'">
+                                                    <span class="text">
+                                                        | {{event['category'][Type]['name']}}
+                                                    </span>
+                                                </ng-container>
+                                            </ng-template>
+                                        </div>
+                                    </ng-container>
+                                </td>
+                                <td>{{event['venue']}}</td>
+                                <td style="cursor:pointer;" (click)="deleteFavorite(event['event'])">
+                                    <a>
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- No favorites to show -->
+            <div class="emptyFavorites mt-5 col-md-9 mx-auto" *ngIf="this.favorites==0">
+                No favorite events to show
+            </div>
+        </div>
+    </div>
+</div>

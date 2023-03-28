@@ -12,6 +12,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { SearchComponent } from './search/search.component';
 import { NavComponent } from './nav/nav.component';
@@ -21,6 +23,10 @@ import { ArtistTabComponent } from './artist-tab/artist-tab.component';
 import { DecimalPipe } from '@angular/common';
 import { VenueTabComponent } from './venue-tab/venue-tab.component';
 
+// Google API
+import { GoogleMapsModule } from '@angular/google-maps';
+import { FavoritesComponent } from './favorites/favorites.component'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,19 +35,22 @@ import { VenueTabComponent } from './venue-tab/venue-tab.component';
     SearchTableComponent,
     EventDetailsComponent,
     ArtistTabComponent,
-    VenueTabComponent
+    VenueTabComponent,
+    FavoritesComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     MatInputModule,
     MatIconModule,
     MatButtonModule,
     MatAutocompleteModule,
-    BrowserAnimationsModule,
     MatTabsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    GoogleMapsModule
   ],
   providers: [HttpClient, DecimalPipe],
   bootstrap: [AppComponent]

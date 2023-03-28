@@ -1,0 +1,9 @@
+li a {
+    color: white;
+    cursor: pointer;
+}
+
+.active {
+    border: 1px solid white;
+    border-radius: 15px;
+}

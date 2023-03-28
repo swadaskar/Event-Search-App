@@ -1,0 +1,45 @@
+.blur {
+    background-color: rgba(255, 255, 255, .2);
+    backdrop-filter: blur(10px);
+    /* border-radius: 17px; */
+    font-size: 15px;
+    margin-bottom: 70px;
+}
+
+.eventOuter{
+    color: white;
+}
+
+.subheading {
+    font-size: 17px;
+    color: #6af9f8;
+}
+
+.text {
+    margin-bottom: 8px;
+    font-size: 13px;
+    margin-top: 1px;
+}
+
+.imageContent img{
+    max-width: 100%;
+    max-height: 100%;
+    /* max-height: 340px; */
+}
+
+.eventHeading {
+    display: inline;
+    font-size: 23px;
+}
+
+.unfavourited{
+    position: relative;
+    color: grey;
+    top: 3px;
+}
+
+.favorited{
+    color: red;
+    position: relative;
+    top: 3px;
+}

@@ -1,55 +1,80 @@
-<div class="container">
-    <app-nav></app-nav>
-
-    <form [formGroup]="reactiveForm" (submit)="onSubmit()" [noValidate]="false">
-        <div class="centerAlign">
-            <h2>Event Search</h2>
-        </div>
-        <label for="keyword">Keyword<span class="star">*</span></label>
-        <input type="text" id="keyword" class="form-control" formControlName="keyword" [formControl]="keywordCtrl" [matAutocomplete]="auto" required>
-        <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngIf="isLoading" class="is-loading"><div>Loading...</div></mat-option>
-            <ng-container *ngIf="!isLoading">
-                <mat-option *ngFor="let keyword of filteredKeywords" [value]="keyword">
-                    {{keyword}}
-                </mat-option>
-            </ng-container>
-        </mat-autocomplete>
-        
+<div class="mx-4">
+    <!-- Nav section -->
+    <ul class="nav justify-content-end mt-2 mb-4">
+        <li class="nav-item active">
+            <a class="nav-link p-2 mx-1" [routerLink]="'../search'">Search</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="'../favorites'">Favourites</a>
+        </li>
+    </ul>
     
-        <table>
-            <tr>
-                <td id="distanceColumn">
-                    <label for="distance">Distance (miles)</label>
-                    <input type="number" id="distance" formControlName="distance" required>
-                </td>
-                <td>
-                    <label for="category">Category<span class="star">*</span></label>
-                    <select id="category" formControlName="category" required>
-                        <option value="default">Default</option>
-                        <option value="music">Music</option>
-                        <option value="sports">Sports</option>
-                        <option value="art">Arts & Theatre</option>
-                        <option value="film">Film</option>
-                        <option value="miscellaneous">Miscellaneous</option>
-                    </select>
-                </td>
-            </tr>
-        </table>
-        <label for="location" >Location<span class="star">*</span></label>
-        <input type="checkbox" id="autodetect" formControlName="autodetect" (change)="autoLocate($event)"><span
-            style="padding-left: 5px;color: lightgrey;">Auto-Detect Location</span>
-        <input type="text" id="location" formControlName="location" required>
-        <br>
-        <br>
-        <div>
-            <button class="submit" type="submit">SEARCH</button>
-            <button class="clear" type="reset" (click)="resetForm()">CLEAR</button>
+    <!-- Form section -->
+    <div class="row mb-4">
+        <div class="blur mx-auto col-md-5 py-5 px-4">
+            <form class="" [formGroup]="reactiveForm" (submit)="onSubmit()" [noValidate]="false">
+                <div class="text-center heading">Events Search</div>
+                <hr id="hrStyle">
+                <div class="form-group mb-3">
+                    <label for="keyword">Keyword<span class="star"> *</span></label>
+                    <input type="text" id="keyword" class="form-control" formControlName="keyword"
+                        [formControl]="keywordCtrl" [matAutocomplete]="auto" required>
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngIf="isLoading" class="is-loading">
+                            <div style="font-size: 15px;"><mat-spinner style="width: 17px;height: 17px;"></mat-spinner></div>
+                        </mat-option>
+                        <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let keyword of filteredKeywords" [value]="keyword">
+                                {{keyword}}
+                            </mat-option>
+                        </ng-container>
+                    </mat-autocomplete>
+                </div>
+    
+                <div class="row">
+                    <div class="col-sm-6 mb-3">
+                        <div class="form-group">
+                            <label for="distance">Distance</label>
+                            <input type="number" id="distance" class="form-control" formControlName="distance" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 col-8 mb-3">
+                        <label for="category">Category<span class="star"> *</span></label>
+                        <select id="category" class="form-select" formControlName="category" required>
+                            <option value="default">Default</option>
+                            <option value="music">Music</option>
+                            <option value="sports">Sports</option>
+                            <option value="art">Arts & Theatre</option>
+                            <option value="film">Film</option>
+                            <option value="miscellaneous">Miscellaneous</option>
+                        </select>
+                    </div>
+                </div>
+    
+                <div class="form-group mb-3">
+                    <label for="location">Location<span class="star"> *</span></label>
+                    <input type="text" id="location" class="form-control" formControlName="location" required>
+                </div>
+    
+                <div class="form-check mb-2">
+                    <input type="checkbox" class="form-check-input" id="autodetect" formControlName="autodetect"
+                        (change)="autoLocate($event)">
+                    <label class="form-check-label" for="autodetect">Auto-detect your location</label>
+                </div>
+                <div class="col-sm-12 text-center">
+                    <button class="btn btn-danger me-3" type="submit">SUBMIT</button>
+                    <button class="btn btn-primary" type="button" (click)="resetForm()">CLEAR</button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 
-    <div>
-        <app-search-table [showTable]="!resetSection" [searchResult]="searchResult">
-        </app-search-table>
+    <!-- Table section -->
+    <div *ngIf="!resetSection">
+        <div class="container">
+            <app-search-table [showTable]="!resetSection" [searchData]="searchResult">
+            </app-search-table>
+        </div>
+            
     </div>
 </div>

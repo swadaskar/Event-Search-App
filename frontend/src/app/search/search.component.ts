@@ -19,7 +19,7 @@ export class SearchComponent implements OnInit{
   keywordCtrl = new FormControl();
   minLengthTerm = 1;
   errorMsg!: string;
-  resetSection: boolean = true;
+  resetSection: boolean = false;
 
   constructor(private api: CallService,) { }
   
@@ -58,7 +58,7 @@ export class SearchComponent implements OnInit{
         )
       )
       .subscribe((data: any) => {
-        console.log(data)
+        // console.log(data)
         if (data._embedded == undefined || data._embedded.attractions == undefined || data._embedded.attractions.length == 0) {
           this.errorMsg = "No results found";
           this.filteredKeywords = [];
@@ -67,7 +67,7 @@ export class SearchComponent implements OnInit{
           this.errorMsg = "";
           this.filteredKeywords = attractionsNames;
         }
-        console.log(this.errorMsg)
+        // console.log(this.errorMsg)
         console.log(this.filteredKeywords, this.keywordCtrl.value);
       });
 
@@ -90,6 +90,7 @@ export class SearchComponent implements OnInit{
       });
       this.isAutoDetect = true;
       this.reactiveForm.value.location = '';
+      this.reactiveForm.controls['location'].reset();
     }
     else {
       this.reactiveForm.get('location')?.enable();
@@ -128,12 +129,15 @@ export class SearchComponent implements OnInit{
     });
   }
 
-  resetForm(): void{
-    // this.reactiveForm.reset();
+  resetForm(){
+    this.reactiveForm.reset();
     this.isAutoDetect = false;
     this.reactiveForm.controls['location'].enable();
-    this.reactiveForm.value.distance = 10;
+    // this.reactiveForm.value.distance = 10;
+    this.reactiveForm.controls['distance'].setValue(10);
+    this.reactiveForm.controls['category'].setValue('default');
     this.filteredKeywords = [];
     this.resetSection = true;
+    this.latlon = '';
   }
 }

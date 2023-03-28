@@ -1,4 +1,55 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --fontSize: 13px;
+    --lineHeight: 1.5;
+    --collapseHeight: 39px;
+    /* calc(var(--lineHeight)*var(--fontSize)*2); */
+}
+
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0 }
+
+
+body {
+    /* margin: 0; */
+    background-image: url('./assets/background.jpg');
+    min-height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    color: white;
+    /* font-family: Georgia, 'Times New Roman', Times, serif; */
+    /* font-family: 'Merriweather', serif; */
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* Autocomplete declarations */
+.cdk-overlay-pane:not(.mat-mdc-autocomplete-panel-above) .mdc-menu-surface.mat-mdc-autocomplete-panel{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+
+/* Material Tabs declarations */
+.mat-mdc-tab-group.mat-mdc-tab-group-stretch-tabs>.mat-mdc-tab-header .mat-mdc-tab {
+    background-color: #3F8D7C;
+}
+
+.mat-mdc-tab .mdc-tab__text-label {
+    color: #ffffffa3;
+    font-size: 13px;
+}
+
+.mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label,
+.mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+    color: #ffffffa3;
+    font-size: 13px;
+}
+
+
+[mat-align-tabs=center]>.mat-mdc-tab-header .mat-mdc-tab-labels{
+    padding: 0px 177px;
+    background-color: #3F8D7C;
+}

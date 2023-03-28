@@ -1,0 +1,56 @@
+/* .albumImage {
+    max-width: 165px;
+    max-height: 165px;
+} */
+
+.artistImage {
+    width: 140px;
+    height: 140px;
+}
+
+/* .carousel-control-prev {
+    margin-left: -35px;
+}
+
+.carousel-control-next {
+    margin-right: -35px;
+} */
+
+.carousel-control-next,.carousel-control-prev {
+    filter: invert(100%);
+}
+
+.subheading {
+    font-size: 17px;
+    color: #6af9f8;
+}
+
+.text {
+    margin-bottom: 8px;
+    font-size: 13px;
+    margin-top: 1px;
+}
+
+.popularitySpinner{
+    margin: 0 auto;
+}
+
+.popularityText {
+    position: relative;
+    /* display: inline; */
+    bottom: 31px;
+    /* margin-left: 2px; */
+    margin-right: 1px;
+}
+
+.followerCount {
+    font-size: 15px;
+}
+
+.emptyMusic {
+    border-radius: 15px;
+    background-color: white;
+    color: red;
+    margin: 100px 0 130px 0;
+    font-size: 18px;
+}

@@ -1,0 +1,24 @@
+li a {
+    color: white;
+    cursor: pointer;
+}
+
+.active {
+    border: 1px solid white;
+    border-radius: 15px;
+}
+
+table {
+    border-radius: 18px;
+}
+
+.heading {
+    font-size: 22px;
+    color: #6af9f8;
+}
+
+.emptyFavorites {
+    border-radius: 15px;
+    background-color: white;
+    color: red;
+}
