@@ -5,7 +5,6 @@ import { ipinfo, geocoding, autosuggest, eventsearch, eventdetails, venuedetails
 
 
 // Current local backend server
-// const baseBackendURL = 'https://api-dot-event-search-382200.uc.r.appspot.com/'
 const baseBackendURL = 'http://localhost:5000'
 
 // geooding api
