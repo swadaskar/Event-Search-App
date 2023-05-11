@@ -16,11 +16,7 @@ export class ArtistTabComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.artistDetails)
-    for (var i = 0; this.artistDetails != undefined && i < this.artistDetails?.length; i++) {
-      console.log(i)
-      console.log(this.artistDetails[i].artists.items[0].name)
-    }
+    console.log(this.artistDetails);
   }
 
   ngOnInit(): void {

@@ -11,13 +11,13 @@
 }
 
 .subheading {
-    font-size: 17px;
+    font-size: 19px;
     color: #6af9f8;
 }
 
 .text {
     margin-bottom: 8px;
-    font-size: 13px;
+    font-size: 15px;
     margin-top: 1px;
 }
 
@@ -29,12 +29,12 @@
 
 .eventHeading {
     display: inline;
-    font-size: 23px;
+    font-size: 21px;
 }
 
 .unfavourited{
     position: relative;
-    color: grey;
+    color: #5c5c5ce0;
     top: 3px;
 }
 

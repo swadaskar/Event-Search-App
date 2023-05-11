@@ -2,15 +2,20 @@
 
 
 .subheading {
-    font-size: 17px;
+    font-size: 19px;
     color: #6af9f8;
     padding-top: 15px
 }
 
 .text {
     margin-bottom: 8px;
-    font-size: 13px;
+    font-size: 15px;
     margin-top: 1px;
+}
+
+.showText {
+    font-size: 13px;
+    color: #64b4d4;
 }
 
 
@@ -48,4 +53,15 @@
 
 #childRule #childRuleCollapse.collapsing {
     height: var(--collapseHeight);
+}
+
+.emptyVenue {
+    border-top-left-radius: 80px 80px;
+    border-bottom-left-radius: 80px 80px;
+    border-top-right-radius: 80px 80px;
+    border-bottom-right-radius: 80px 80px;
+    background-color: white;
+    color: red;
+    margin: 100px 0 130px 0;
+    font-size: 18px;
 }

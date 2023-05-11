@@ -1,168 +1,218 @@
 <div *ngIf="artistDetails!= undefined && artistDetails.length>0; else noMusicArtists">
     <div *ngIf="artistDetails.length==1; else carouselDiv">
-        <div class="container text-center px-5 pt-3 pb-4">
+        <div class="text-center pt-3 pb-4" style="padding: 0 90px;">
             <!-- Artist Details -->
             <div class="row d-flex align-items-center">
-                <div class="col-md-4">
-                    <img src="{{artistDetails[0].artists.items[0].images[0].url}}" class="rounded-circle artistImage" alt="Artist">
-                    <div class="subheading mt-1" style="font-size: 20px;">{{artistDetails[0].artists.items[0].name}}</div>
+                <div class="col-md-4 mb-3">
+                    <ng-container *ngIf="artistDetails[0]?.artists?.items[0]?.images[0]?.url!=undefined">
+                        <img src="{{artistDetails[0].artists.items[0].images[0].url}}" class="rounded-circle artistImage"
+                            alt="ArtistImage">
+                    </ng-container>
+                    <ng-container *ngIf="artistDetails[0].artists.items[0].name!=undefined">
+                        <div class="subheading mt-1" style="font-size: 20px;">{{artistDetails[0].artists.items[0].name}}</div>
+                    </ng-container>
+            
                 </div>
                 <div class="col-md-8">
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="subheading mb-3">Popularity</div>
-                            <div>
-                                <mat-progress-spinner class="popularitySpinner" color="warn"
-                                    value="{{artistDetails[0].artists.items[0].popularity}}"
-                                    style="width: 40px;height: 40px;"></mat-progress-spinner>
-                                <div class="text popularityText">
-                                    {{artistDetails[0].artists.items[0].popularity}}
+                        <div class="col-md-4" style="margin-bottom: -10px;">
+                            <ng-container *ngIf="artistDetails[0]?.artists?.items[0]?.popularity!=undefined">
+                                <div class="subheading mb-3">Popularity</div>
+                                <div>
+                                    <mat-progress-spinner class="popularitySpinner" color="warn"
+                                        value="{{artistDetails[0].artists.items[0].popularity}}"
+                                        style="width: 40px;height: 40px;"></mat-progress-spinner>
+                                    <div class="text popularityText">
+                                        {{artistDetails[0].artists.items[0].popularity}}
+                                    </div>
                                 </div>
-                            </div>
+                            </ng-container>
             
                         </div>
-                        <div class="col-md-4">
-                            <div class="subheading mb-3">Followers</div>
-                            <div class="text followerCount">
-                                {{formatFollowersCount(artistDetails[0].artists.items[0].followers.total)}}
-                            </div>
+                        <div class="col-md-4 mb-3">
+                            <ng-container *ngIf="artistDetails[0]?.artists?.items[0]?.followers?.total!=undefined">
+                                <div class="subheading mb-3">Followers</div>
+                                <div class="text followerCount">
+                                    {{formatFollowersCount(artistDetails[0].artists.items[0].followers.total)}}
+                                </div>
+                            </ng-container>
+            
                         </div>
-                        <div class="col-md-4">
-                            <div class="subheading mb-3">Spotify Link</div>
-                            <a href="{{artistDetails[0].artists.items[0].external_urls.spotify}}" target="_blank">
-                                <!-- <i class="fab fa-spotify"></i> -->
-                                <!-- <i class="fa-brands fa-spotify"></i> -->
-                                <i class="fa fa-spotify fa-3x" style="color:#037400" aria-hidden="true"></i>
-                            </a>
+                        <div class="col-md-4 mb-3">
+                            <ng-container *ngIf="artistDetails[0]?.artists?.items[0]?.external_urls?.spotify!=undefined">
+                                <div class="subheading mb-3">Spotify Link</div>
+                                <a href="{{artistDetails[0].artists.items[0].external_urls.spotify}}" target="_blank">
+                                    <!-- <i class="fab fa-spotify"></i> -->
+                                    <!-- <i class="fa-brands fa-spotify"></i> -->
+                                    <i class="fa fa-spotify fa-3x" style="color:#0c9309" aria-hidden="true"></i>
+                                </a>
+                            </ng-container>
                         </div>
                     </div>
                 </div>
             </div>
             
             <!-- Albums of featuring artist -->
-            <div class="subheading mb-4 mt-4" style="text-align: initial;font-size: 15px;">
-                Albums featuring {{artistDetails[0].artists.items[0].name}}
-            </div>
+            <ng-container *ngIf="artistDetails[0]?.artists?.items[0]?.name!=undefined">
+                <div class="subheading mb-3" style="text-align: initial;font-size: 15px;">
+                    Album featuring {{artistDetails[0].artists.items[0].name}}
+                </div>
+            </ng-container>
             
             <!-- Images of albums: -->
-            <div class="row">
-                <img *ngFor="let image of artistDetails[0].albums.items" src="{{image.images[0].url}}" class="albumImage col-md-4"
-                    alt="AlbumImage" />
-            </div>
+            <ng-container *ngIf="artistDetails[0]?.albums?.items!=undefined">
+                <div class="row">
+                    <img *ngFor="let image of artistDetails[0].albums.items" src="{{image.images[0].url}}"
+                        class="albumImage col-md-4 mb-3" alt="AlbumImage" />
+                </div>
+            </ng-container>
         
         </div>
     </div>
 
     <ng-template #carouselDiv>
         <div id="carouselExampleControls" class="carousel slide" data-bs-interval="false">
-            <div class="carousel-inner pt-3 pb-4" style="padding:0 90px;">
+            <div class="carousel-inner pt-3 pb-4">
 
                 <div class="carousel-item active">
                     <div class="d-block w-100">
-                        <div class="container text-center">
+                        <div class="text-center" style="padding:0 90px;">
                             <!-- Artist Details -->
                             <div class="row d-flex align-items-center">
-                                <div class="col-md-4">
-                                    <img src="{{artistDetails[0].artists.items[0].images[0].url}}" class="rounded-circle artistImage" alt="Artist">
-                                    <div class="subheading mt-1" style="font-size: 20px;">{{artistDetails[0].artists.items[0].name}}</div>
+                                <div class="col-md-4 mb-3">
+                                    <ng-container *ngIf="artistDetails[0]?.artists?.items[0]?.images[0]?.url!=undefined">
+                                        <img src="{{artistDetails[0].artists.items[0].images[0].url}}" class="rounded-circle artistImage" alt="ArtistImage">
+                                    </ng-container>
+                                    <ng-container *ngIf="artistDetails[0].artists.items[0].name!=undefined">
+                                        <div class="subheading mt-1" style="font-size: 20px;">{{artistDetails[0].artists.items[0].name}}</div>
+                                    </ng-container>
+                                    
                                 </div>
                                 <div class="col-md-8">
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="subheading mb-3">Popularity</div>
-                                            <div>
-                                                <mat-progress-spinner class="popularitySpinner" color="warn" value="{{artistDetails[0].artists.items[0].popularity}}"
-                                                    style="width: 40px;height: 40px;"></mat-progress-spinner>
-                                                <div class="text popularityText">
-                                                    {{artistDetails[0].artists.items[0].popularity}}
+                                        <div class="col-md-4" style="margin-bottom: -10px;">
+                                            <ng-container *ngIf="artistDetails[0]?.artists?.items[0]?.popularity!=undefined">
+                                                <div class="subheading mb-3">Popularity</div>
+                                                <div>
+                                                    <mat-progress-spinner class="popularitySpinner" color="warn"
+                                                        value="{{artistDetails[0].artists.items[0].popularity}}"
+                                                        style="width: 40px;height: 40px;"></mat-progress-spinner>
+                                                    <div class="text popularityText">
+                                                        {{artistDetails[0].artists.items[0].popularity}}
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </ng-container>
+                                                                                        
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <ng-container *ngIf="artistDetails[0]?.artists?.items[0]?.followers?.total!=undefined">
+                                                <div class="subheading mb-3">Followers</div>
+                                                <div class="text followerCount">
+                                                    {{formatFollowersCount(artistDetails[0].artists.items[0].followers.total)}}
+                                                </div>
+                                            </ng-container>
                                             
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="subheading mb-3">Followers</div>
-                                            <div class="text followerCount">
-                                                {{formatFollowersCount(artistDetails[0].artists.items[0].followers.total)}}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="subheading mb-3">Spotify Link</div>
-                                            <a href="{{artistDetails[0].artists.items[0].external_urls.spotify}}" target="_blank">
-                                                <!-- <i class="fab fa-spotify"></i> -->
-                                                <!-- <i class="fa-brands fa-spotify"></i> -->
-                                                <i class="fa fa-spotify fa-3x" style="color:#037400" aria-hidden="true"></i>
-                                            </a>
+                                        <div class="col-md-4 mb-3">
+                                            <ng-container *ngIf="artistDetails[0]?.artists?.items[0]?.external_urls?.spotify!=undefined">
+                                                <div class="subheading mb-3">Spotify Link</div>
+                                                <a href="{{artistDetails[0].artists.items[0].external_urls.spotify}}" target="_blank">
+                                                    <!-- <i class="fab fa-spotify"></i> -->
+                                                    <!-- <i class="fa-brands fa-spotify"></i> -->
+                                                    <i class="fa fa-spotify fa-3x" style="color:#0c9309" aria-hidden="true"></i>
+                                                </a>
+                                            </ng-container>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             
                             <!-- Albums of featuring artist -->
-                            <div class="subheading mb-4 mt-4" style="text-align: initial;font-size: 15px;">
-                                Albums featuring {{artistDetails[0].artists.items[0].name}}
-                            </div>
+                            <ng-container *ngIf="artistDetails[0]?.artists?.items[0]?.name!=undefined">
+                                <div class="subheading mb-3" style="text-align: initial;font-size: 15px;">
+                                    Album featuring {{artistDetails[0].artists.items[0].name}}
+                                </div>
+                            </ng-container>
                             
                             <!-- Images of albums: -->
-                            <div class="row">
-                                <img *ngFor="let image of artistDetails[0].albums.items" src="{{image.images[0].url}}" class="albumImage col-md-4" alt="AlbumImage" />
-                            </div>
-
+                            <ng-container *ngIf="artistDetails[0]?.albums?.items!=undefined">
+                                <div class="row">
+                                    <img *ngFor="let image of artistDetails[0].albums.items" src="{{image.images[0].url}}" class="albumImage col-md-4 mb-3"
+                                        alt="AlbumImage" />
+                                </div>
+                            </ng-container>
                         </div>
                     </div>
                 </div>
 
                 <div class="carousel-item" *ngFor="let artist of artistDetails.slice(1)">
                     <div class="d-block w-100">
-                        <div class="container text-center">
+                        <div class="text-center" style="padding:0 90px;">
                             <!-- Artist Details -->
                             <div class="row d-flex align-items-center">
-                                <div class="col-md-4">
-                                    <img src="{{artist.artists.items[0].images[0].url}}" class="rounded-circle artistImage" alt="Artist">
-                                    <div class="subheading mt-1" style="font-size: 20px;">{{artist.artists.items[0].name}}</div>
+                                <div class="col-md-4 mb-3">
+                                    <ng-container *ngIf="artist?.artists?.items[0]?.images[0]?.url!=undefined">
+                                        <img src="{{artist.artists.items[0].images[0].url}}" class="rounded-circle artistImage"
+                                            alt="ArtistImage">
+                                    </ng-container>
+                                    <ng-container *ngIf="artist.artists.items[0].name!=undefined">
+                                        <div class="subheading mt-1" style="font-size: 20px;">{{artist.artists.items[0].name}}</div>
+                                    </ng-container>
+                            
                                 </div>
                                 <div class="col-md-8">
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="subheading mb-3">Popularity</div>
-                                            <div>
-                                                <mat-progress-spinner class="popularitySpinner" color="warn"
-                                                    value="{{artist.artists.items[0].popularity}}"
-                                                    style="width: 40px;height: 40px;"></mat-progress-spinner>
-                                                <div class="text popularityText">
-                                                    {{artist.artists.items[0].popularity}}
+                                        <div class="col-md-4" style="margin-bottom: -10px;">
+                                            <ng-container *ngIf="artist?.artists?.items[0]?.popularity!=undefined">
+                                                <div class="subheading mb-3">Popularity</div>
+                                                <div>
+                                                    <mat-progress-spinner class="popularitySpinner" color="warn"
+                                                        value="{{artist.artists.items[0].popularity}}"
+                                                        style="width: 40px;height: 40px;"></mat-progress-spinner>
+                                                    <div class="text popularityText">
+                                                        {{artist.artists.items[0].popularity}}
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </ng-container>
                             
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="subheading mb-3">Followers</div>
-                                            <div class="text followerCount">
-                                                {{formatFollowersCount(artist.artists.items[0].followers.total)}}
-                                            </div>
+                                        <div class="col-md-4 mb-3">
+                                            <ng-container *ngIf="artist?.artists?.items[0]?.followers?.total!=undefined">
+                                                <div class="subheading mb-3">Followers</div>
+                                                <div class="text followerCount">
+                                                    {{formatFollowersCount(artist.artists.items[0].followers.total)}}
+                                                </div>
+                                            </ng-container>
+                            
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="subheading mb-3">Spotify Link</div>
-                                            <a href="{{artist.artists.items[0].external_urls.spotify}}" target="_blank">
-                                                <!-- <i class="fab fa-spotify"></i> -->
-                                                <!-- <i class="fa-brands fa-spotify"></i> -->
-                                                <i class="fa fa-spotify fa-3x" style="color:#037400" aria-hidden="true"></i>
-                                            </a>
+                                        <div class="col-md-4 mb-3">
+                                            <ng-container *ngIf="artist?.artists?.items[0]?.external_urls?.spotify!=undefined">
+                                                <div class="subheading mb-3">Spotify Link</div>
+                                                <a href="{{artist.artists.items[0].external_urls.spotify}}" target="_blank">
+                                                    <!-- <i class="fab fa-spotify"></i> -->
+                                                    <!-- <i class="fa-brands fa-spotify"></i> -->
+                                                    <i class="fa fa-spotify fa-3x" style="color:#0c9309" aria-hidden="true"></i>
+                                                </a>
+                                            </ng-container>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             
                             <!-- Albums of featuring artist -->
-                            <div class="subheading mb-4 mt-4" style="text-align: initial;font-size: 15px;">
-                                Albums featuring {{artist.artists.items[0].name}}
-                            </div>
+                            <ng-container *ngIf="artist?.artists?.items[0]?.name!=undefined">
+                                <div class="subheading mb-3" style="text-align: initial;font-size: 15px;">
+                                    Album featuring {{artist.artists.items[0].name}}
+                                </div>
+                            </ng-container>
                             
                             <!-- Images of albums: -->
-                            <div class="row">
-                                <img *ngFor="let image of artist.albums.items" src="{{image.images[0].url}}" class="albumImage col-md-4"
-                                    alt="AlbumImage" />
-                            </div>
-                        
+                            <ng-container *ngIf="artist?.albums?.items!=undefined">
+                                <div class="row">
+                                    <img *ngFor="let image of artist.albums.items" src="{{image.images[0].url}}"
+                                        class="albumImage col-md-4 mb-3" alt="AlbumImage" />
+                                </div>
+                            </ng-container>
                         </div>
                     </div>
                 </div>
@@ -181,7 +231,74 @@
 
 
 <ng-template #noMusicArtists>
-    <div class="emptyMusic col-md-9 mx-auto text-center">
+    <div class="emptyMusic px-3 col-8 col-md-9 mx-auto text-center" style="font-size: 18px;">
         No music related artist details to show
     </div>
 </ng-template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+
+
+
+ Artist Details
+<div class="row d-flex align-items-center">
+    <div class="col-md-4">
+        <img src="{{artistDetails[0].artists.items[0].images[0].url}}" class="rounded-circle artistImage" alt="Artist">
+        <div class="subheading mt-1" style="font-size: 20px;">{{artistDetails[0].artists.items[0].name}}</div>
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="subheading mb-3">Popularity</div>
+                <div>
+                    <mat-progress-spinner class="popularitySpinner" color="warn"
+                        value="{{artistDetails[0].artists.items[0].popularity}}"
+                        style="width: 40px;height: 40px;"></mat-progress-spinner>
+                    <div class="text popularityText">
+                        {{artistDetails[0].artists.items[0].popularity}}
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div class="subheading mb-3">Followers</div>
+                <div class="text followerCount">
+                    {{formatFollowersCount(artistDetails[0].artists.items[0].followers.total)}}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="subheading mb-3">Spotify Link</div>
+                <a href="{{artistDetails[0].artists.items[0].external_urls.spotify}}" target="_blank">
+                     <i class="fab fa-spotify"></i> -->
+                    <!-- <i class="fa-brands fa-spotify"></i> -->
+                    <!--<i class="fa fa-spotify fa-3x" style="color:#037400" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<!-- Albums of featuring artist 
+<div class="subheading mb-4 mt-4" style="text-align: initial;font-size: 15px;">
+    Albums featuring {{artistDetails[0].artists.items[0].name}}
+</div>-->
+
+<!-- Images of albums:
+<div class="row">
+    <img *ngFor="let image of artistDetails[0].albums.items" src="{{image.images[0].url}}" class="albumImage col-md-4"
+        alt="AlbumImage" />
+</div> -->

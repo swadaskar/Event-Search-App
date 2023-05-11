@@ -1,20 +1,20 @@
-<div class="mx-4">
+<div class="">
     <!-- Nav section -->
-    <ul class="nav justify-content-end mt-2 mb-4">
+    <ul class="nav justify-content-end mt-2 mb-4 mx-2">
         <li class="nav-item active">
-            <a class="nav-link p-2 mx-1" [routerLink]="'../search'">Search</a>
+            <a class="nav-link p-2 mx-1" [routerLink]="'../search'" style="font-size: 15px;">Search</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" [routerLink]="'../favorites'">Favourites</a>
+            <a class="nav-link" [routerLink]="'../favorites'" style="font-size: 15px;">Favorites</a>
         </li>
     </ul>
     
     <!-- Form section -->
-    <div class="row mb-4">
+    <div class="row mb-4 mx-2">
         <div class="blur mx-auto col-md-5 py-5 px-4">
             <form class="" [formGroup]="reactiveForm" (submit)="onSubmit()" [noValidate]="false">
-                <div class="text-center heading">Events Search</div>
-                <hr id="hrStyle">
+                <div class="text-center heading pb-2 mb-3">Events Search</div>
+                <!-- <hr id="hrStyle"> -->
                 <div class="form-group mb-3">
                     <label for="keyword">Keyword<span class="star"> *</span></label>
                     <input type="text" id="keyword" class="form-control" formControlName="keyword"
@@ -23,7 +23,7 @@
                         <mat-option *ngIf="isLoading" class="is-loading">
                             <div style="font-size: 15px;"><mat-spinner style="width: 17px;height: 17px;"></mat-spinner></div>
                         </mat-option>
-                        <ng-container *ngIf="!isLoading">
+                        <ng-container *ngIf="!isLoading && keywordCtrl.value !=''">
                             <mat-option *ngFor="let keyword of filteredKeywords" [value]="keyword">
                                 {{keyword}}
                             </mat-option>
@@ -68,13 +68,12 @@
             </form>
         </div>
     </div>
+</div>
 
-    <!-- Table section -->
-    <div *ngIf="!resetSection">
-        <div class="container">
-            <app-search-table [showTable]="!resetSection" [searchData]="searchResult">
-            </app-search-table>
-        </div>
-            
+<!-- Table section -->
+<div *ngIf="!resetSection">
+    <div class="mx-2">
+        <app-search-table [showTable]="!resetSection" [searchData]="searchResult">
+        </app-search-table>
     </div>
 </div>

@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
-    --fontSize: 13px;
+    --fontSize: 15px;
     --lineHeight: 1.5;
-    --collapseHeight: 39px;
+    --collapseHeight: 45px;
     /* calc(var(--lineHeight)*var(--fontSize)*2); */
 }
 
@@ -39,17 +39,34 @@ body {
 
 .mat-mdc-tab .mdc-tab__text-label {
     color: #ffffffa3;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label,
 .mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
-    color: #ffffffa3;
-    font-size: 13px;
+    color: white;
+    font-size: 12px;
 }
 
 
 [mat-align-tabs=center]>.mat-mdc-tab-header .mat-mdc-tab-labels{
-    padding: 0px 177px;
+    /* padding: 0px 177px; */
     background-color: #3F8D7C;
+}
+
+
+.collapsing {
+    transition: unset !important;
+}
+
+.modal-backdrop.show {
+    opacity: 0 !important;
+}
+
+.mat-mdc-progress-spinner.mat-warn {
+    --mdc-circular-progress-active-indicator-color: #D11339;
+}
+
+.mat-mdc-tab {
+    width: 20%;
 }

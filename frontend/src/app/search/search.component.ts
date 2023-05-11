@@ -41,6 +41,7 @@ export class SearchComponent implements OnInit{
             return false
           }
           return true
+          // return res !== null && res.length >= this.minLengthTerm
         }),
         distinctUntilChanged(),
         debounceTime(800),
@@ -70,15 +71,6 @@ export class SearchComponent implements OnInit{
         // console.log(this.errorMsg)
         console.log(this.filteredKeywords, this.keywordCtrl.value);
       });
-
-    // this.api.getIpInfo().subscribe((data) => {
-    //   console.log(data);
-    // });
-    // this.myserv.getGeoCoding('University of Southern California CA');
-    // this.myserv.getAutoSuggest('L');
-    // this.myserv.getEventSearchData('Los Angeles', 'KZFzniwnSyZfZ7v7nE', 10, 'miles', '34.036,-118.279');
-    // this.myserv.getEventDetailData('G5eYZ98HCe8Sl');
-    // this.myserv.getVenueDetailData('USC Galen Center');
   }
 
   autoLocate(eventData: any): void{
@@ -104,8 +96,9 @@ export class SearchComponent implements OnInit{
     if (!this.isAutoDetect) {
       this.api.getGeoCoding(this.reactiveForm.value.location).subscribe(res => {
         if (res['status'] != 'OK') {
-          alert('Enter Correct Location');
+          // alert('Enter Correct Location');
           this.latlon = '';
+          this.makeTable();
         }
         else {
           this.latlon = res.results[0].geometry.location.lat+','+res.results[0].geometry.location.lng;
@@ -118,15 +111,20 @@ export class SearchComponent implements OnInit{
   }
 
   makeTable(): void{
-    let keyword = this.keywordCtrl.value;
-    let distance = this.reactiveForm.value.distance;
-    let category = this.reactiveForm.value.category;
-    console.log(keyword, distance, category, this.latlon, this.reactiveForm.value.autodetect);
-    this.api.getEventSearchData(keyword, category, distance, 'miles', this.latlon).subscribe((res) => {
-      console.log(res);
-      this.searchResult = res;
+    if (this.latlon=='') {
       this.resetSection = false;
-    });
+      this.searchResult = [];
+    }else{
+      let keyword = this.keywordCtrl.value;
+      let distance = this.reactiveForm.value.distance;
+      let category = this.reactiveForm.value.category;
+      console.log(keyword, distance, category, this.latlon, this.reactiveForm.value.autodetect);
+      this.api.getEventSearchData(keyword, category, distance, 'miles', this.latlon).subscribe((res) => {
+        console.log(res);
+        this.searchResult = res;
+        this.resetSection = false;
+      });
+    }
   }
 
   resetForm(){

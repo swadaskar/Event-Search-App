@@ -30,13 +30,15 @@ export class FavoritesComponent implements OnInit, OnChanges {
       for(let i = 0; i < this.favorites.length; i++) {
         this.mouseOver.push(false);
       }
+    }else{
+      this.favorites = [];
     }
     console.log(this.favorites)
   }
 
-  deleteFavorite(event: any) {
+  deleteFavorite(id: any) {
     alert("Removed from favorites!");
-    this.favorites = this.favorites.filter((item: any) => item.event != event);
+    this.favorites = this.favorites.filter((item: any) => item.id != id);
     localStorage.setItem('favorites', JSON.stringify(this.favorites));
   }
 

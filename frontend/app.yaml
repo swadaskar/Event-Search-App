@@ -1,0 +1,28 @@
+runtime: nodejs18
+# service: default
+
+
+handlers:
+# - url: /
+#   static_files: dist/frontend/index.html
+#   upload: dist/frontend/index.html
+# - url: /
+#   static_dir: dist/frontend
+
+# - url: /search
+#   static_files: dist/frontend/index.html
+#   upload: dist/frontend/index.html
+# - url: /search
+#   static_dir: dist/frontend
+
+# - url: /favorites
+#   static_files: dist/frontend/index.html
+#   upload: dist/frontend/index.html
+# - url: /favorites
+#   static_dir: dist/frontend
+  - url: /(.*\..+)$
+    static_files: dist/frontend/\1
+    upload: dist/frontend/(.*\..+)$
+  - url: /.*
+    static_files: dist/frontend/index.html
+    upload: dist/frontend/index.html

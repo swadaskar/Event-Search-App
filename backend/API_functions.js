@@ -1,7 +1,7 @@
 const axios = require('axios')
-require("dotenv").config({ path: __dirname + "/../.env" });
+// require("dotenv").config({ path: __dirname + "/../.env" });
 const geohash = require('ngeohash');
-const apiKey = process.env.TICKETMASTER_API_KEY
+const apiKey = 'Jdf4GP2674AxHAGBMLInCvwN6ZydDgZ5'
 
 // sample autosuggest url
 // https://app.ticketmaster.com/discovery/v2/suggest?apikey=Jdf4GP2674AxHAGBMLInCvwN6ZydDgZ5&keyword=L
@@ -74,6 +74,13 @@ async function getVenueDetailData(keyword) {
     let response = await axios(options).catch(function (error) {
         console.log(`Error received:${error}`)
     })
+    // console.log("Venue Response:",response)
+    // if (response.data) {
+    //     return response.data
+    // } else {
+    //     return {}
+    // }
+
     return response.data
 }
 

@@ -33,6 +33,59 @@ export class SearchTableComponent implements OnChanges {
       if (this.searchData != undefined){
         if (this.searchData._embedded != undefined){
           this.searchResult = this.searchData._embedded.events.slice(0,20);
+
+          // Sort the search results by date and time
+          this.searchResult.sort(function compare(a, b) {
+            let adate = "";
+            let bdate = "";
+            let atime = "";
+            let btime = "";
+
+            if (a.dates?.start?.localDate == undefined)
+            { 
+              adate = "9999-12-31";
+            }else{
+              adate = a.dates.start.localDate;
+            }
+
+            if (b.dates?.start?.localDate == undefined)
+            {
+              bdate = "9999-12-31";
+            }else{
+              bdate = b.dates.start.localDate;
+            }
+
+            if (a.dates?.start?.localTime == undefined)
+            {
+              atime = "23:59:59";
+            }else{
+              atime = a.dates.start.localTime;
+            }
+
+            if (b.dates?.start?.localTime == undefined)
+            {
+              btime = "23:59:59";
+            }else{
+              btime = b.dates.start.localTime;
+            }
+
+            if (adate < bdate) {
+              return -1; // a,b order
+            }
+            if (adate > bdate) {
+              return 1; // b,a order
+            }else{
+              if (atime < btime) {
+                return -1; // a,b order
+              }
+              if (atime > btime) {
+                return 1; // b,a order
+              }
+            }
+            return 0; // a,b maintain order
+          });
+
+
           this.showMainTable = true;
         }else{
           this.searchResult = [];

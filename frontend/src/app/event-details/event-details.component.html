@@ -4,87 +4,103 @@
         <i class="fa fa-angle-left me-1" aria-hidden="true" style="font-size:20px;"></i>
         <u>Back</u>
     </div>
-    <div class="text-center" style="margin-top: 30px;margin-bottom: 30px;">
-        <div class="eventHeading me-3">{{eventResults['name']}}</div>
-        <button class="rounded-circle px-2 py-1" style="border:none;" (click)="makeFavourite()">
+    <div class="text-center" style="margin: 30px 10px;">
+        <div class="eventHeading me-1">{{eventResults['name']}}  </div>
+        <button class="rounded-circle px-2 py-1 ms-1" style="border:none;" (click)="makeFavourite()">
             <span class="material-icons unfavourited" *ngIf="!isFavourite; else favouriteDiv">
-                favorite_border
+                            favorite_border
             </span>
             <ng-template #favouriteDiv>
                 <span class="material-icons favorited">
-                    favorite
+                            favorite
                 </span>
             </ng-template>
         </button>
     </div>
-    <mat-tab-group mat-align-tabs="center">
+    <mat-tab-group mat-align-tabs="center" mat-stretch-tabs="false">
         <mat-tab label="Events">
-            <div class="container">
-                <div class="row text-center my-3" id="eventInfo">
-                        <div class="col-md-6" id="eventTextDetails">
-                            <div class="textContent">
-                                <div class="subheading">Date</div>
-                                <div class="text">{{eventResults.dates.start.localDate}} <span *ngIf="eventResults.dates.start.localTime!=undefined" style="display:block;">{{eventResults.dates.start.localTime}}</span></div>
-                                <div *ngIf="eventResults['_embedded']['attractions'][0]['name'] !== ''">
-                                    <div class="subheading">Artist/Team</div>
-                                    <div class="text">
-                                        {{eventResults['_embedded']['attractions'][0]['name']}}
-                                        <ng-container *ngFor="let artist of eventResults['_embedded']['attractions']; let i=index">
-                                            <span *ngIf="i!==0"> | {{artist['name']}}</span>
-                                        </ng-container>
-                                    </div>
-                                </div>
+            <div class="container overflow-hidden">
+                <div class="row text-center mt-4 my-3" id="eventInfo">
+                    <div class="col-md-5 px-3" id="eventTextDetails">
+                        <div class="textContent">
 
+                            <ng-container *ngIf="eventResults?.dates?.start?.localDate!=undefined || eventResults?.dates?.start?.localTime!=undefined">
+                                <div class="subheading">Date</div>
+                                <div class="text">{{eventResults.dates.start.localDate}} <span *ngIf="eventResults.dates.start.localTime!=undefined"
+                                        style="display:block;">{{eventResults.dates.start.localTime}}</span></div>
+                            </ng-container>
+                            
+
+                            <ng-container *ngIf="eventResults._embedded?.attractions[0]?.name!=undefined && eventResults?._embedded?.attractions[0]?.name !== ''">
+                                <div class="subheading">Artist/Team</div>
+                                <div class="text">
+                                    {{eventResults['_embedded']['attractions'][0]['name']}}
+                                    <ng-container *ngFor="let artist of eventResults['_embedded']['attractions']; let i=index">
+                                        <span *ngIf="i!==0"> | {{artist['name']}}</span>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="eventResults?._embedded?.venues[0]?.name !== ''">
                                 <div class="subheading">Venue</div>
                                 <div class="text">{{eventResults['_embedded']['venues'][0]['name']}}</div>
-                                
-                                
-                                <ng-container *ngFor="let Type of ['subGenre','genre','segment','subType','type']; let i=index">
-                                    <div class="subheading" *ngIf="i==0">Genres</div>
-                                    <div class="text" style="display:inline">
-                                        <span *ngIf="i==0 && eventResults['_embedded']['attractions'][0]['classifications'][0][Type] != undefined && eventResults['_embedded']['attractions'][0]['classifications'][0][Type]['name'] !== 'undefined' && 
-                                                eventResults['_embedded']['attractions'][0]['classifications'][0][Type]['name'] !== 'Undefined'; else others">
-                                            {{eventResults['_embedded']['attractions'][0]['classifications'][0][Type]['name']}}
-                                        </span>
-                                        <ng-template #others>
-                                            <ng-container *ngIf="eventResults['_embedded']['attractions'][0]['classifications'][0][Type] != undefined && eventResults['_embedded']['attractions'][0]['classifications'][0][Type]['name'] !== 'undefined' && 
-                                                eventResults['_embedded']['attractions'][0]['classifications'][0][Type]['name'] !== 'Undefined'">
-                                                <span class="text">
-                                                    | {{eventResults['_embedded']['attractions'][0]['classifications'][0][Type]['name']}}
-                                                </span>
-                                            </ng-container>
-                                        </ng-template>
+                            </ng-container>
+                            
+                            <ng-container *ngIf="genreField!==''">
+                                <div class="subheading">Genres</div>
+                                <div class="text">{{genreField}}</div>
+                            </ng-container>
+                            
+                            
+                            <!-- <ng-container *ngFor="let Type of ['subGenre','genre','segment','subType','type']; let i=index">
+                                <div class="subheading" *ngIf="i==0">Genres</div>
+                                <div class="text">
+                                    <span *ngIf="i==0 && eventResults['_embedded']['attractions'][0]['classifications'][0][Type] != undefined && eventResults['_embedded']['attractions'][0]['classifications'][0][Type]['name'] !== 'undefined' && 
+                                            eventResults['_embedded']['attractions'][0]['classifications'][0][Type]['name'] !== 'Undefined'; else others">
+                                        {{eventResults['_embedded']['attractions'][0]['classifications'][0][Type]['name']}}
+                                    </span>
+                                    <ng-template #others>
+                                        <ng-container *ngIf="eventResults['_embedded']['attractions'][0]['classifications'][0][Type] != undefined && eventResults['_embedded']['attractions'][0]['classifications'][0][Type]['name'] !== 'undefined' && 
+                                            eventResults['_embedded']['attractions'][0]['classifications'][0][Type]['name'] !== 'Undefined'">
+                                            <span class="text">
+                                                | {{eventResults['_embedded']['attractions'][0]['classifications'][0][Type]['name']}}
+                                            </span>
+                                        </ng-container>
+                                    </ng-template>
+                                </div>
+                            </ng-container> -->
+                            
+                            <ng-container *ngIf="eventResults?.priceRanges!=undefined">
+                                <ng-container *ngIf="eventResults.priceRanges[0]?.min!=undefined && eventResults.priceRanges[0]?.max!=undefined">
+                                    <div class="subheading">Price Range</div>
+                                    <div class="text">
+                                    {{ eventResults['priceRanges'][0]['min'] }} - {{ eventResults['priceRanges'][0]['max'] }}
                                     </div>
                                 </ng-container>
-                                
-                                <ng-container *ngIf="eventResults['priceRanges']">
-                                    <ng-container *ngIf="eventResults['priceRanges'][0]['min'] && eventResults['priceRanges'][0]['max']">
-                                        <div class="subheading">Price Range</div>
-                                        <div class="text">
-                                        {{ eventResults['priceRanges'][0]['min'] }} - {{ eventResults['priceRanges'][0]['max'] }}
-                                        </div>
-                                    </ng-container>
-                                </ng-container>
-                                
-                                <ng-container *ngIf="eventResults['dates']['status']['code']">
-                                    <div class="subheading">Ticket Status</div>
-                                    <div class="text pb-1">
-                                        <span class="ticketStatus p-1 rounded-3" [style.background-color]="ticketStatus[0]">{{ ticketStatus[1] }}</span>
-                                    </div>
-                                </ng-container>
-                                
+                            </ng-container>
+                            
+                            <ng-container *ngIf="eventResults?.dates?.status?.code!=undefined">
+                                <div class="subheading">Ticket Status</div>
+                                <div class="text pb-1">
+                                    <span class="ticketStatus rounded-3" [style.background-color]="ticketStatus[0]" style="padding: 5px 7px;">{{ ticketStatus[1] }}</span>
+                                </div>
+                            </ng-container>
+                            
+                            <ng-container *ngIf="eventResults?.url!=undefined">
                                 <div class="subheading">Buy Ticket At:</div>
                                 <div class="text"><a href="{{eventResults['url']}}" target="_blank">Ticketmaster</a></div>
-                            </div>
+                            </ng-container>
+                            
                         </div>
-                        <div class="col-md-6">
-                            <div class="imageContent" *ngIf="eventResults.seatmap?.staticUrl != undefined">
-                                <img src="{{eventResults['seatmap']['staticUrl']}}">
-                            </div>
+                    </div>
+                    <div class="col-md-7 my-auto">
+                        <div class="imageContent" *ngIf="eventResults.seatmap?.staticUrl != undefined">
+                            <img src="{{eventResults['seatmap']['staticUrl']}}">
                         </div>
+                    </div>
                     <div>
                         <div class="centerAlign">
-                            Share on:
+                            <span class="" style="bottom: 5px;position: relative;">Share on: </span>
                             <a class="m-2" style="font-size: 30px; color: #4486E7;" target="_blank"
                                 href="https://twitter.com/intent/tweet/?text=Check {{eventResults['name']}} on Ticketmaster.%0A{{eventResults['url']}}">
                                 <i class="fa fa-twitter" aria-hidden="true"></i>
@@ -99,12 +115,12 @@
             </div>
         </mat-tab>
         <mat-tab label="Artist/Teams" style="color:white;">
-            <div class="container">
+            <div class="container overflow-hidden">
                 <app-artist-tab [artistDetails]="artistResults"></app-artist-tab>
             </div>
         </mat-tab>
         <mat-tab label="Venue" style="color:white;">
-            <div class="container">
+            <div class="container overflow-hidden">
                 <app-venue-tab [venueDetails]="venueResults" (gmapEvent)="sendBackLocation($event)"></app-venue-tab>
             </div>
         </mat-tab>

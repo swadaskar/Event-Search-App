@@ -1,8 +1,8 @@
 <div class="row">
-    <div class="col-md-9 mx-auto">
+    <div class="col-md-9 mx-auto mb-5">
         <div *ngIf="showTable && showMainTable && this.searchResult.length>0">
-            <div class="">
-                <table class="table table-dark table-striped overflow-hidden text-center">
+            <div class="table-responsive" style="border-top-left-radius: 18px;border-top-right-radius: 18px;">
+                <table class="table table-dark table-striped overflow-hidden text-center" style="font-size: 16px;">
                     <thead>
                         <tr>
                             <th scope="col" style="width:15%;">Date/Time</th>
@@ -15,7 +15,7 @@
                     <tbody>
                         <ng-container *ngFor="let event of searchResult">
                             <tr *ngIf="event['name']!=undefined && event._embedded?.venues!=undefined && event._embedded?.venues[0]?.name!=undefined && event._embedded.attractions!=undefined && event._embedded.attractions[0]?.classifications[0]?.segment?.name
-                                    != undefined">
+                                    != undefined" style="cursor: pointer;">
                                 <th scope="row" (click)="eventDetails(event['id'])"><a>{{event.dates.start.localDate}} <span
                                             *ngIf="event.dates.start.localTime!=undefined"
                                             style="display:block;">{{event.dates.start.localTime}}</span></a></th>
@@ -34,11 +34,16 @@
             </div>
         </div>
         <div *ngIf="showTable && showMainTable && this.searchResult.length==0">
-            <div class="emptySearch text-center mb-2">
+            <div class="emptySearch text-center mb-2 mx-auto col-8" style="font-size: 18px;">
                 No results available
             </div>
         </div>
-    
+    </div>
+</div>
+
+<!-- Event Details -->
+<div class="row">
+    <div class="col-md-7 mx-auto">
         <div *ngIf="!showMainTable && showTable && this.selectedEvent != undefined">
             <app-event-details [showEventDetails]="showDetails" [eventResults]="selectedEvent"
                 (gmapEvent)="getGoogleMaps($event)" (backEvent)="showTableAgain($event)">
@@ -47,16 +52,19 @@
     </div>
 </div>
 
+
+
+
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade modal-static" id="exampleModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel" style="color:black;"><b>Event Venue</b></h1>
+                <h5 class="modal-title" id="exampleModalLabel" style="color:black;font-weight: bolder;">Event Venue</h5>
             </div>
             <div class="modal-body">
                 <div class="my-google-map" *ngIf="mapOptions!=undefined && marker!=undefined">
-                    <google-map width="100%" [options]="mapOptions">
+                    <google-map width="100%" height="50vh" [options]="mapOptions">
                         <map-marker [position]="marker.position"></map-marker>
                     </google-map>
                 </div>

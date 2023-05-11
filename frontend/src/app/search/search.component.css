@@ -6,7 +6,7 @@ li a {
 
 .active {
     border: 1px solid white;
-    border-radius: 15px;
+    border-radius: 12px;
 }
 
 /* Search Form */
@@ -21,7 +21,9 @@ li a {
  
 .heading {
     color: #ffffffd9;
-    font-size: 30px;
+    font-size: 40px;
+    font-family: 'Libre Baskerville', serif;
+    border-bottom: 1px solid white;
 }
 
 #hrStyle {

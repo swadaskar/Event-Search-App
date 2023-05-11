@@ -1,21 +1,21 @@
-<div class="mx-4">
+<div class="">
     <!-- Nav bar -->
-    <ul class="nav justify-content-end mt-2 mb-4">
+    <ul class="nav justify-content-end mt-2 mb-4 mx-2">
         <li class="nav-item">
-            <a class="nav-link p-2 mx-1" [routerLink]="'../search'">Search</a>
+            <a class="nav-link p-2 mx-1" [routerLink]="'../search'" style="font-size: 15px;">Search</a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" [routerLink]="'../favorites'">Favourites</a>
+            <a class="nav-link" [routerLink]="'../favorites'" style="font-size: 15px;">Favorites</a>
         </li>
     </ul>
 
 
-    <div class="row">
+    <div class="row mx-2">
         <div class="col-md-8 text-center mx-auto">
-            <div class="mt-4" *ngIf="this.favorites.length!=0">
+            <div class="mt-4" *ngIf="favorites.length!=0">
                 <!-- Favorites table -->
                 <div class="heading mb-3">List of your favorite events</div>
-                <div class="">
+                <div class="table-responsive">
                     <table class="table table-light overflow-hidden text-center">
                         <thead>
                             <tr>
@@ -42,7 +42,7 @@
                                             </div>
                                         </ng-container>
                                     </ng-container> -->
-                                    <ng-container *ngFor="let Type of ['subGenre','genre','segment','subType','type']; let i=index">
+                                    <!-- <ng-container *ngFor="let Type of ['subGenre','genre','segment','subType','type']; let i=index">
                                         <div class="text" style="display:inline">
                                             <span *ngIf="i==0 && event['category'][Type] != undefined && event['category'][Type]['name'] !== 'undefined' && event['category'][Type]['name'] !== 'Undefined'; else others">
                                                 {{event['category'][Type]['name']}}
@@ -56,10 +56,11 @@
                                                 </ng-container>
                                             </ng-template>
                                         </div>
-                                    </ng-container>
+                                    </ng-container> -->
+                                    {{event['category']}}
                                 </td>
                                 <td>{{event['venue']}}</td>
-                                <td style="cursor:pointer;" (click)="deleteFavorite(event['event'])">
+                                <td style="cursor:pointer;" (click)="deleteFavorite(event['id'])">
                                     <a>
                                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                                     </a>
@@ -69,10 +70,10 @@
                     </table>
                 </div>
             </div>
-            <!-- No favorites to show -->
-            <div class="emptyFavorites mt-5 col-md-9 mx-auto" *ngIf="this.favorites==0">
-                No favorite events to show
-            </div>
+        </div>
+        <!-- No favorites to show -->
+        <div class="emptyFavorites mt-5 col-8 col-md-6 text-center mx-auto" style="font-size: 18px;" *ngIf="favorites.length==0">
+            No favorite events to show
         </div>
     </div>
 </div>

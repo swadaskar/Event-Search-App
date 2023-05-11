@@ -17,6 +17,7 @@ export class EventDetailsComponent implements OnInit, OnChanges {
   @Output() gmapEvent = new EventEmitter<any>();
   @Output() backEvent = new EventEmitter<any>();
 
+  genreField: String | undefined;
   ticketStatus: any;
   artistResults: any[];
   venueResults: any;
@@ -37,6 +38,14 @@ export class EventDetailsComponent implements OnInit, OnChanges {
         
         this.eventResults = this.eventResults;
         this.ticketStatus = this.getStatus(this.eventResults['dates']['status']['code'])
+        
+        // Genre Field
+        this.genreField = ['segment', 'genre', 'subGenre', 'type', 'subType'].filter(Type => (
+          Type in this.eventResults['_embedded']['attractions'][0]['classifications'][0] &&
+          this.eventResults['_embedded']['attractions'][0]['classifications'][0][Type]['name'] !== "undefined" &&
+            this.eventResults['_embedded']['attractions'][0]['classifications'][0][Type]['name'] !== "Undefined"
+        )).map(Type => this.eventResults['_embedded']['attractions'][0]['classifications'][0][Type]['name']).join(" | ");      
+
       } else {
         this.eventResults = [];
       }
@@ -46,8 +55,9 @@ export class EventDetailsComponent implements OnInit, OnChanges {
       for (var i = 0; i < this.eventResults['_embedded']['attractions'].length; i++){
         if (this.eventResults['_embedded']['attractions'][i]['classifications'][0]['segment']['name'] == "Music") {
           this.api.getArtistDetailData(this.eventResults['_embedded']['attractions'][i]['name']).subscribe((data: any) => {
-            this.artistResults.push(data);
-            // console.log(data)
+            if (!("error" in data)){
+              this.artistResults.push(data);
+            }
           });
         }
       }
@@ -88,7 +98,7 @@ export class EventDetailsComponent implements OnInit, OnChanges {
     }
 
     for(var i = 0; i < this.favorites.length; i++){
-      if (this.favorites[i]['event'] == this.eventResults['name']){
+      if (this.favorites[i]['id'] == this.eventResults['id']){
         this.isFavourite = true;
         break;
       }
@@ -98,14 +108,15 @@ export class EventDetailsComponent implements OnInit, OnChanges {
   makeFavourite(){
     if (this.isFavourite){
       alert("Event Removed from Favorites!");
-      this.favorites = this.favorites.filter((item: any) => item['event'] !== this.eventResults['name']);
+      this.favorites = this.favorites.filter((item: any) => item['id'] !== this.eventResults['id']);
       this.isFavourite = false;
     }else{
       alert("Event Added to Favorites!")
       let temp = {
+        id: this.eventResults['id'],
         date: this.eventResults['dates']['start']['localDate'],
         event: this.eventResults['name'],
-        category: this.eventResults['_embedded']['attractions'][0]['classifications'][0],
+        category: this.genreField,
         venue: this.eventResults['_embedded']['venues'][0]['name'],
       }
       this.favorites.push(temp);
